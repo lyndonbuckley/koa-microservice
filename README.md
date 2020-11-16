@@ -1,10 +1,10 @@
 # koa-microservice
 Microservice Server for Koa
 
-| --- | --- |
-| GitHub | https://github.com/lyndonbuckley/koa-microservice |
+| Resource | URL |
+| -- | -- |
 | NPM | https://www.npmjs.com/package/koa-microservice |
-
+| GitHub | https://github.com/lyndonbuckley/koa-microservice |
 
 ## Intro
 
