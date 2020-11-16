@@ -49,9 +49,12 @@ export class MicroserviceEventHandler<T = MicroserviceEventArguments> {
         }
 
         const results = await Promise.all(promises);
-        let result: boolean = true;
-        if (results.indexOf(false) >= 0) result = false;
-        return result;
+        let result: boolean;
+        for (result of results)
+            if (result === false)
+                return false;
+
+        return true;
     }
 
     private async processCallback(event: MicroserviceEvent<T>, callback: MicroserviceEventCallback<T>): Promise<boolean> {
