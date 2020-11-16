@@ -61,10 +61,10 @@ export class MicroserviceEventHandler<T = MicroserviceEventArguments> {
         try {
             // trigger callback
             const cb = callback.bind(event);
-            const result = cb.apply(this.app, [event]);
-            if (result instanceof Promise) await result;
-
-            return true;
+            let result = cb.apply(this.app, [event]);
+            if (result instanceof Promise)
+                result = await result;
+            return result;
         } catch (err) {
             console.error(err);
             return false;
