@@ -64,7 +64,9 @@ export class MicroserviceEventHandler<T = MicroserviceEventArguments> {
             let result = cb.apply(this.app, [event]);
             if (result instanceof Promise)
                 result = await result;
-            return result;
+            if (typeof result === "boolean")
+                return result;
+            return true;
         } catch (err) {
             console.error(err);
             return false;
