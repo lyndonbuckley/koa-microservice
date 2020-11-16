@@ -3,8 +3,9 @@ Microservice Server for Koa
 
 | Resource | URL |
 | -- | -- |
-| NPM | https://www.npmjs.com/package/koa-microservice |
 | GitHub | https://github.com/lyndonbuckley/koa-microservice |
+| NPM | https://npmjs.com/package/koa-microservice |
+
 
 ## Intro
 
