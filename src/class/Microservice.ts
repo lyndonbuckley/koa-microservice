@@ -14,8 +14,9 @@ import {existsSync} from "fs";
 import {resolve} from "path";
 
 const packageJSON = (():any|null => {
-    if (existsSync('package.json')) {
-        return require('package.json');
+    const currentDir = resolve('.','package.json');
+    if (existsSync(currentDir)) {
+        return require(currentDir);
     }
     const parentDir = resolve('..','package.json');
     if (existsSync(parentDir)) {
