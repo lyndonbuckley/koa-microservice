@@ -12,6 +12,7 @@ import {
 import {MicroserviceHTTPListener} from "../listen/MicroserviceHTTPListener";
 import {existsSync} from "fs";
 import {resolve} from "path";
+import {hostname} from "os";
 
 const packageJSON = (():any|null => {
     const currentDir = resolve('.','package.json');
@@ -142,14 +143,12 @@ export class Microservice extends Koa {
                 version: this.version,
                 banner: this.banner,
             },
-            process: {
-                id: process.pid,
-                parent: process.ppid,
+            instance: {
+                host: hostname(),
+                pid: process.pid,
+                ppid: process.ppid,
                 uptime: process.uptime(),
-                version: process.version,
-                versions: process.versions,
             },
-
         };
     }
 
