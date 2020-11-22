@@ -13,7 +13,7 @@ import {MicroserviceHTTPListener} from "../listen/MicroserviceHTTPListener";
 import {existsSync} from "fs";
 import {resolve} from "path";
 
-const packageJSON = (() => {
+const packageJSON = (():any|null => {
     if (existsSync('package.json')) {
         return require('package.json');
     }
@@ -21,6 +21,7 @@ const packageJSON = (() => {
     if (existsSync(parentDir)) {
         return require(parentDir);
     }
+    return {}
 })();
 
 export class Microservice extends Koa {
@@ -135,7 +136,19 @@ export class Microservice extends Koa {
         ctx.body = {
             healthy,
             status: this.status,
-            uptime: process.uptime(),
+            service: {
+                name: this.name,
+                version: this.version,
+                banner: this.banner,
+            },
+            process: {
+                id: process.pid,
+                parent: process.ppid,
+                uptime: process.uptime(),
+                version: process.version,
+                versions: process.versions,
+            },
+
         };
     }
 
