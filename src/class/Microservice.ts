@@ -13,7 +13,7 @@ import {MicroserviceHTTPListener} from "../listen/MicroserviceHTTPListener";
 import {existsSync} from "fs";
 import {resolve} from "path";
 
-const packageJSON = function() {
+const packageJSON = (() => {
     if (existsSync('package.json')) {
         return require('package.json');
     }
@@ -21,7 +21,7 @@ const packageJSON = function() {
     if (existsSync(parentDir)) {
         return require(parentDir);
     }
-}();
+})();
 
 export class Microservice extends Koa {
     constructor(opts?: MicroserviceOptions) {
