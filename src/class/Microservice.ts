@@ -10,7 +10,18 @@ import {
     MicroserviceHealthCheckCallback, MicroserviceListener
 } from "../types";
 import {MicroserviceHTTPListener} from "../listen/MicroserviceHTTPListener";
+import {existsSync} from "fs";
+import {resolve} from "path";
 
+const packageJSON = function() {
+    if (existsSync('package.json')) {
+        return require('package.json');
+    }
+    const parentDir = resolve('..','package.json');
+    if (existsSync(parentDir)) {
+        return require(parentDir);
+    }
+}();
 
 export class Microservice extends Koa {
     constructor(opts?: MicroserviceOptions) {
@@ -30,8 +41,12 @@ export class Microservice extends Koa {
         // add default health check
         this.addHealthCheck(this._defaultHealthCheck.bind(this));
 
+        // name and banner
+        this.name = opts?.name || packageJSON?.name || 'Microservice';
+        this.version = opts?.version || packageJSON?.version || '0.0.0';
+        this.banner = opts?.banner || `${this.name}/${this.version}`;
+
         // options
-        if (opts?.banner) this.banner = opts.banner;
         if (opts?.useConsole) this.useConsole();
         if (opts?.healthCheckUserAgent) this.healthCheckUserAgent = opts.healthCheckUserAgent;
         if (opts?.healthCheckEndpoint) this.healthCheckEndpoint = opts.healthCheckEndpoint;
@@ -79,11 +94,12 @@ export class Microservice extends Koa {
     //     BANNER
     // --------------
 
+    name?: string;
+    version?: string;
     banner?: string;
     getBanner(suffix?: string) {
-        const banner: string = this.banner || 'Microservice';
-        if (suffix) return `${banner} ${suffix}`;
-        return banner;
+        if (suffix) return `${this.banner} ${suffix}`;
+        return this.banner;
     }
 
     // --------------------

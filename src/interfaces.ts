@@ -8,6 +8,8 @@ import {
 import {Microservice} from "./class/Microservice";
 
 export interface MicroserviceOptions {
+    name?: string;
+    version?: string;
     banner?: string;
     useConsole?: boolean;
     onStartup?: MicroserviceEventCallback[] | MicroserviceEventCallback;
