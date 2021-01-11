@@ -1,4 +1,4 @@
-import Koa = require('koa');
+import Koa from "koa";
 import {MicroserviceOptions} from "../interfaces";
 import {MicroserviceEventHandler} from "./MicroserviceEventHandler";
 import {MicroserviceEventType, MicroserviceFeedbackType, MicroserviceListenerStatus, MicroserviceStatus} from "../enum";
@@ -26,7 +26,7 @@ const packageJSON = (():any|null => {
     return {}
 })();
 
-export class Microservice extends Koa {
+export class Microservice<ContextType, StateType> extends Koa<ContextType, StateType> {
     constructor(opts?: MicroserviceOptions) {
         super();
 
