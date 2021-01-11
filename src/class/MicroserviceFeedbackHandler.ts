@@ -1,14 +1,15 @@
 import {Microservice} from "./Microservice";
 import {MicroserviceFeedbackType} from "../enum";
 import {MicroserviceFeedbackArguments, MicroserviceFeedbackCallback} from "../types";
+import {DefaultContext, DefaultState} from "koa";
 
 export class MicroserviceFeedbackHandler {
-    app: Microservice;
+    app: Microservice<DefaultContext, DefaultState>;
     type: MicroserviceFeedbackType;
     callbacks: MicroserviceFeedbackCallback[] = [];
 
     constructor(
-        app: Microservice,
+        app: Microservice<DefaultContext, DefaultState>,
         type: MicroserviceFeedbackType,
         callbacks?: MicroserviceFeedbackCallback[] | MicroserviceFeedbackCallback,
     ) {

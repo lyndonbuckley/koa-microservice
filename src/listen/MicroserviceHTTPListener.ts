@@ -2,10 +2,11 @@ import {Microservice} from "../class/Microservice";
 import {MicroserviceListenerStatus, MicroserviceListenerType} from "../enum";
 import {MicroserviceListenerStart, MicroserviceListenerStop} from "../func/MicroserviceListenerFunctions";
 import {createServer, Server} from "http";
+import {DefaultContext, DefaultState} from "koa";
 
 export class MicroserviceHTTPListener {
 
-    app: Microservice;
+    app: Microservice<DefaultContext, DefaultState>;
     type?: MicroserviceListenerType;
     status: MicroserviceListenerStatus;
     start: ()=>Promise<boolean>;
@@ -18,7 +19,7 @@ export class MicroserviceHTTPListener {
 
     server: Server;
 
-    constructor(app: Microservice, host: string, port: number, domain?: string) {
+    constructor(app: Microservice<DefaultContext, DefaultState>, host: string, port: number, domain?: string) {
         this.app = app;
         this.host = host;
         this.port = port;

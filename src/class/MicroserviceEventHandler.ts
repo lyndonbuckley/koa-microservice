@@ -2,15 +2,16 @@ import {Microservice} from "./Microservice";
 import {MicroserviceEventCallbackMode, MicroserviceEventType} from "../enum";
 import {MicroserviceEventArguments, MicroserviceEventCallback} from "../types";
 import {MicroserviceEvent} from "../interfaces";
+import {DefaultContext, DefaultState} from "koa";
 
 export class MicroserviceEventHandler<T = MicroserviceEventArguments> {
-    app: Microservice;
+    app: Microservice<DefaultContext, DefaultState>;
     type: MicroserviceEventType;
     callbacks: MicroserviceEventCallback<T>[] = [];
     mode: MicroserviceEventCallbackMode;
 
     constructor(
-        app: Microservice,
+        app: Microservice<DefaultContext, DefaultState>,
         type: MicroserviceEventType,
         mode?: MicroserviceEventCallbackMode,
         callbacks?: MicroserviceEventCallback<T>[] | MicroserviceEventCallback<T>,

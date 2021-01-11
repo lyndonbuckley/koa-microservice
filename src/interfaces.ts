@@ -6,6 +6,7 @@ import {
     MicroserviceListenerType
 } from "./enum";
 import {Microservice} from "./class/Microservice";
+import {DefaultContext, DefaultState} from "koa";
 
 export interface MicroserviceOptions {
     name?: string;
@@ -27,12 +28,12 @@ export interface MicroserviceOptions {
 export interface MicroserviceEvent<T = MicroserviceEventArguments> {
     type: MicroserviceEventType;
     time: Date;
-    app: Microservice;
+    app: Microservice<DefaultContext, DefaultState>;
     args?: T;
 }
 
 export interface MicroserviceListenerInterface {
-    app: Microservice;
+    app: Microservice<DefaultContext, DefaultState>;
     type?: MicroserviceListenerType;
     status: MicroserviceListenerStatus;
 
