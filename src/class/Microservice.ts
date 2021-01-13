@@ -26,7 +26,7 @@ const packageJSON = (():any|null => {
     return {}
 })();
 
-export class Microservice<C extends DefaultContext, S extends DefaultState> extends Koa<DefaultContext, DefaultState> {
+export class Microservice<C extends DefaultContext = DefaultContext, S extends DefaultState = DefaultState> extends Koa<DefaultContext, DefaultState> {
     constructor(opts?: MicroserviceOptions) {
         super();
 
