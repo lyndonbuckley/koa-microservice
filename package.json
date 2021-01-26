@@ -1,6 +1,6 @@
 {
   "name": "koa-microservice",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A microservice server for Koa",
   "main": "build/index.js",
   "types": "build/index.d.ts",
