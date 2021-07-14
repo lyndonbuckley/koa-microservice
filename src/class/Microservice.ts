@@ -49,12 +49,14 @@ export class Microservice<C extends DefaultContext = DefaultContext, S extends D
         this.version = opts?.version || packageJSON?.version || '0.0.0';
         this.banner = opts?.banner || `${this.name}/${this.version}`;
 
+
         // options
         if (opts?.useConsole) this.useConsole();
         if (opts?.healthCheckUserAgent) this.healthCheckUserAgent = opts.healthCheckUserAgent;
         if (opts?.healthCheckEndpoint) this.healthCheckEndpoint = opts.healthCheckEndpoint;
         if (opts?.shutdownTimeout) this._shutdownTimeout = opts.shutdownTimeout;
         if (opts?.sendReadyOnceListening) this.sendReadyOnceListening();
+        if (opts?.healthCheckAdditionalData) this.healthCheckAdditionalData = opts?.healthCheckAdditionalData;
 
         // initialising status
         this._status = this.changeStatus(MicroserviceStatus.Initialising);
@@ -109,6 +111,7 @@ export class Microservice<C extends DefaultContext = DefaultContext, S extends D
     //     HEALTH CHECK
     // --------------------
 
+    private healthCheckAdditionalData: any | undefined = undefined;
     private _healthCheckEndpoint: string[] = [];
     get healthCheckEndpoint(): string | string[] {
         return this._healthCheckEndpoint;
@@ -135,20 +138,21 @@ export class Microservice<C extends DefaultContext = DefaultContext, S extends D
     private async _handleHealthCheck(ctx: Koa.Context) {
         const healthy: boolean = await this._performHealthChecks(ctx);
         ctx.status = healthy ? 200 : 503;
+
+        let data: object | null = null;
+        if (this.healthCheckAdditionalData)
+            data = {data: this.healthCheckAdditionalData}
+
         ctx.body = {
             healthy,
             status: this.status,
+            uptime: process.uptime(),
             service: {
                 name: this.name,
                 version: this.version,
                 banner: this.banner,
             },
-            instance: {
-                host: hostname(),
-                pid: process.pid,
-                ppid: process.ppid,
-                uptime: process.uptime(),
-            },
+            ...data
         };
     }
 

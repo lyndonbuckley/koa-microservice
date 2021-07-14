@@ -23,6 +23,7 @@ export interface MicroserviceOptions {
     sendReadyOnceListening?: boolean;
     healthCheckEndpoint?: string | string[];
     healthCheckUserAgent?: string | string[];
+    healthCheckAdditionalData?: any;
 }
 
 export interface MicroserviceEvent<T = MicroserviceEventArguments> {
